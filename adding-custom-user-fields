@@ -8,22 +8,31 @@ function extra_user_profile_fields( $user ) { ?>
 		<tr>
 			<th><label for="private_notes"><?php _e("Private Notes"); ?></label></th>
 			<td>
-				<textarea rows="5" cols="30" id="private_notes" name="private_notes"><?php echo esc_attr( get_user_meta( 'private_notes', $user->ID ) ); ?></textarea>
+				<textarea rows="5" cols="30" id="private_notes" name="private_notes"><?php echo $user->ID; echo esc_attr( get_user_meta( $user->ID, 'private_notes', true ) );  ?></textarea>
 				<br />
 				<span class="description"><?php _e("User Private Notes."); ?></span>
 			</td>
+		</tr>
+		<tr>
+			<th><label for="address"><?php _e("Address"); ?></label></th>
 			<td>
-				<input type="text" id="address" name="address" value="<?php echo esc_attr( get_user_meta( 'address', $user->ID ) ); ?>" />
+				<input type="text" id="address" name="address" value="<?php echo esc_attr( get_user_meta( $user->ID, 'address', true ) ); ?>" />
 				<br />
 				<span class="description"><?php _e("User Address"); ?></span>
 			</td>
+		</tr>
+		<tr>
+			<th><label for="city"><?php _e("City"); ?></label></th>
 			<td>
-				<input id="city" name="city" value="<?php echo esc_attr( get_user_meta( 'city', $user->ID ) ); ?>" />
+				<input id="city" name="city" value="<?php echo esc_attr( get_user_meta( $user->ID, 'city', true ) ); ?>" />
 				<br />
 				<span class="description"><?php _e("User City"); ?></span>
 			</td>
+		</tr>
+		<tr>
+			<th><label for="postalcode"><?php _e("Postal Code"); ?></label></th>
 			<td>
-				<input id="postalcode" name="postalcode" value="<?php echo esc_attr( get_user_meta( 'postalcode', $user->ID ) ); ?>" />
+				<input id="postalcode" name="postalcode" value="<?php echo esc_attr( get_user_meta( $user->ID, 'postalcode', true  ) ); ?>" />
 				<br />
 				<span class="description"><?php _e("User Postal Code"); ?></span>
 			</td>
