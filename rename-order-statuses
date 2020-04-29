@@ -1,0 +1,10 @@
+add_filter( 'wc_order_statuses', 'renaming_order_status' );
+function renaming_order_status( $order_statuses ) {
+    foreach ( $order_statuses as $key => $status ) {
+        if ( 'wc-completed' === $key ) 
+            $order_statuses['wc-completed'] = _x( 'Shipped', 'Order status', 'woocommerce' );
+    	if( 'wc-pending' === $key )
+          $order_statuses['wc-pending'] = _x( 'Pending Payment', 'Order status', 'woocommerce' );
+    }
+    return $order_statuses;
+}
