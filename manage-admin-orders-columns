@@ -1,0 +1,37 @@
+add_filter( 'manage_edit-shop_order_columns', 'mht_add_new_order_admin_list_column' );
+function mht_add_new_order_admin_list_column( $columns ) {
+    $columns['customer_id'] = 'Customer ID';
+	$columns['email'] = 'Email';
+	$columns['phone'] = 'Phone';
+	$columns['company_name'] = 'Company';
+    $columns['payment_method'] = 'Payment Method';
+
+    return $columns;
+}
+add_action( 'manage_shop_order_posts_custom_column', 'mht_add_new_order_admin_list_column_content' );
+function mht_add_new_order_admin_list_column_content( $column ) { 
+
+  //echo get_total_reviews_count();
+  
+    global $post;
+	if ( 'customer_id' === $column ) {
+        $order = wc_get_order( $post->ID );
+	echo $order->get_user_id();
+    }
+	else if ( 'email' === $column ) {
+        $order = wc_get_order( $post->ID );
+        echo $order->get_billing_email();
+    }
+	else if ( 'phone' === $column ) {
+        $order = wc_get_order( $post->ID );
+        echo $order->get_billing_phone();
+    }
+    else if ( 'company_name' === $column ) {
+        $order = wc_get_order( $post->ID );
+        echo $order->get_billing_company();
+    }
+    else if ( 'payment_method' === $column ) {
+        $order = wc_get_order( $post->ID );
+        echo $order->get_payment_method_title();
+    }
+}
