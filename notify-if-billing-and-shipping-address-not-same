@@ -1,0 +1,29 @@
+add_action( 'woocommerce_admin_order_data_after_order_details', 'same_shipping_open_order', 10, 1 );
+function same_shipping_open_order( $order ){
+
+    // Define HERE, in the array, your "OPEN" orders statuses
+    ////$open_order_statuses = array('wc-pending','wc-processing','wc-on-hold');
+
+    // Initialising variables
+    $matching = false;
+
+    // Get the shipping 'address_1' & 'postcode' fields for the CURRENT ORDER
+	$order_shipping_address1 = $order->get_shipping_address_1();
+	$order_shipping_address2 = $order->get_shipping_address_2();
+	$order_billing_address1 = $order->get_billing_address_1();
+    $order_billing_address2 = $order->get_billing_address_2();
+	?>
+
+<?php
+	if($order_shipping_address1 != $order_billing_address1 || $order_shipping_address2 != $order_billing_address2){
+		?>
+	<script>
+            (function($){
+                alert('Billing and Shipping Addresses Do Not Match');
+            })(jQuery);
+        </script>
+	<?php
+        echo '<br clear="all"><p style="margin-top:12px !important;"><strong style="color:red;">'. __("Billing and Shipping Addresses Do Not Match").'</strong><br></p>';
+
+	}
+}
