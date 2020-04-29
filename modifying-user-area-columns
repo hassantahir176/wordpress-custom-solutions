@@ -1,7 +1,7 @@
-add_filter( 'manage_users_columns', 'column_register_wpse_101322' );
-add_filter( 'manage_users_custom_column', 'column_display_wpse_101322', 10, 3 );
+add_filter( 'manage_users_columns', 'add_remove_columns' );
+add_filter( 'manage_users_custom_column', 'modify_columns_data', 10, 3 );
 
-function column_register_wpse_101322( $columns ) 
+function add_remove_columns( $columns ) 
 {
 	$new_cols = array();
 	foreach($columns as $column => $value){
@@ -16,7 +16,7 @@ function column_register_wpse_101322( $columns )
     return $new_cols;
 }
 
-function column_display_wpse_101322( $empty, $column_name, $user_id ) 
+function modify_columns_data( $empty, $column_name, $user_id ) 
 {
     if ( 'uid' == $column_name )
         return "<strong>$user_id</strong>";
