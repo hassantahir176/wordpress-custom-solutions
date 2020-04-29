@@ -1,0 +1,36 @@
+add_filter( 'manage_users_columns', 'column_register_wpse_101322' );
+add_filter( 'manage_users_custom_column', 'column_display_wpse_101322', 10, 3 );
+
+function column_register_wpse_101322( $columns ) 
+{
+	$new_cols = array();
+	foreach($columns as $column => $value){
+		if($value == 'Posts'){
+			continue;
+		}
+		$new_cols[$column] = $value;
+	}
+    $new_cols['order_history'] = 'Show Order History';
+	//$new_cols['total_orders'] = 'Total Orders';
+    $new_cols['uid'] = 'ID';
+    return $new_cols;
+}
+
+function column_display_wpse_101322( $empty, $column_name, $user_id ) 
+{
+    if ( 'uid' == $column_name )
+        return "<strong>$user_id</strong>";
+    else if('order_history' == $column_name)
+    {
+       return "<a href=" . get_home_url() . "/wp-admin/edit.php?post_status=all&amp;post_type=shop_order&amp;_customer_user=$user_id\"> View other orders →</a>";
+    }
+	else if('total_orders' == $column_name){
+		global $wpdb;
+		$orders_count = $wpdb->get_results("SELECT Count(Meta_value) as num_orders from wp_postmeta where meta_key=\"_customer_user\" and meta_value=$user_id");
+		foreach($orders_count as $orders){
+			return $orders->num_orders;
+		}
+	}
+    else
+        return $empty;
+}
